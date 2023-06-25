@@ -20,74 +20,6 @@ export function FormAddTask(props: IProps) {
   );
   const [taskGetDay, setTaskGetDay] = useState<string>("Today");
 
-  const renderSetDateContent = () => {
-    if (chooseDateContent) {
-      return (
-        <AnimatePresence>
-          <motion.div
-            key="setdatecontent"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { delay: 0.7, duration: 0.3 } }}
-            className="absolute w-64 mt-1 text-sm bg-white border rounded-md select-none"
-          >
-            <div
-              className="py-2 border-b cursor-pointer"
-              onClick={() => setChooseDateContent(!chooseDateContent)}
-            >
-              <div className="flex flex-row items-center justify-between px-4">
-                <h1 className="font-light text-[0.75rem]">
-                  {moment(new Date(taskForDate)).format("DD MMM")}
-                </h1>
-                <IoMdClose className="text-[#B8B8B8]" />
-              </div>
-            </div>
-            <div className="my-1 border-b">
-              <div
-                className="py-1 hover:bg-[#ececec] cursor-pointer"
-                onClick={() => {
-                  if (taskGetDay === "Today") {
-                    setTaskForDate(
-                      `${moment(new Date(taskForDate)).add(1, "days")}`
-                    );
-                    setTaskGetDay("Tomorrow");
-                  } else {
-                    setTaskForDate(
-                      `${moment(new Date(taskForDate)).add(-1, "days")}`
-                    );
-                    setTaskGetDay("Today");
-                  }
-                }}
-              >
-                <div className="flex items-center justify-between px-4">
-                  <div className="flex flex-row items-center gap-1">
-                    <div className="">
-                      <PiSunDuotone
-                        className={`text-lg ${
-                          taskGetDay !== "Today"
-                            ? "text-[#5D904D]"
-                            : "text-yellow-500"
-                        }`}
-                      />
-                    </div>
-                    <h1 className="">
-                      {taskGetDay === "Today" ? "Tomorrow" : "Today"}
-                    </h1>
-                  </div>
-                  <h1 className="">
-                    {moment(new Date(taskForDate)).format("ddd")}
-                  </h1>
-                </div>
-              </div>
-            </div>
-            <div className="py-4"></div>
-          </motion.div>
-        </AnimatePresence>
-      );
-    }
-    return null;
-  };
-
   const renderMain = useMemo(() => {
     return (
       <>
@@ -118,7 +50,72 @@ export function FormAddTask(props: IProps) {
               <MdDateRange />
               <h1 className="">{taskGetDay}</h1>
             </div>
-            {renderSetDateContent()}
+            <AnimatePresence>
+              {chooseDateContent && (
+                <motion.div
+                  key="setdatecontent"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{
+                    opacity: 0,
+                    transition: { duration: 0.3 },
+                  }}
+                  className="absolute w-64 mt-1 text-sm bg-white border rounded-md select-none"
+                >
+                  <div
+                    className="py-2 border-b cursor-pointer"
+                    onClick={() => setChooseDateContent(!chooseDateContent)}
+                  >
+                    <div className="flex flex-row items-center justify-between px-4">
+                      <h1 className="font-light text-[0.75rem]">
+                        {moment(new Date(taskForDate)).format("DD MMM")}
+                      </h1>
+                      <IoMdClose className="text-[#B8B8B8]" />
+                    </div>
+                  </div>
+                  <div className="my-1 border-b">
+                    <div
+                      className="py-1 hover:bg-[#ececec] cursor-pointer"
+                      onClick={() => {
+                        if (taskGetDay === "Today") {
+                          setTaskForDate(
+                            `${moment(new Date(taskForDate)).add(1, "days")}`
+                          );
+                          setTaskGetDay("Tomorrow");
+                        } else {
+                          setTaskForDate(
+                            `${moment(new Date(taskForDate)).add(-1, "days")}`
+                          );
+                          setTaskGetDay("Today");
+                        }
+                        setChooseDateContent(false);
+                      }}
+                    >
+                      <div className="flex items-center justify-between px-4">
+                        <div className="flex flex-row items-center gap-1">
+                          <div className="">
+                            <PiSunDuotone
+                              className={`text-lg ${
+                                taskGetDay !== "Today"
+                                  ? "text-[#5D904D]"
+                                  : "text-yellow-500"
+                              }`}
+                            />
+                          </div>
+                          <h1 className="">
+                            {taskGetDay === "Today" ? "Tomorrow" : "Today"}
+                          </h1>
+                        </div>
+                        <h1 className="">
+                          {moment(new Date(taskForDate)).format("ddd")}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="py-4"></div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         <hr />
@@ -144,7 +141,13 @@ export function FormAddTask(props: IProps) {
         </div>
       </>
     );
-  }, [setAddTaskForm, renderSetDateContent, setModalClose]);
+  }, [
+    setAddTaskForm,
+    chooseDateContent,
+    taskForDate,
+    taskGetDay,
+    setModalClose,
+  ]);
 
   return renderMain;
 }

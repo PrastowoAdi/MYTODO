@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { HiBars3 } from "react-icons/hi2";
 import { GoHome, GoPlus, GoTasklist, GoPerson } from "react-icons/go";
 import ModalAddTodos from "../ModalAddTodos";
+import { AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface IProps {
   setOpenSideBar: () => void;
@@ -10,12 +12,6 @@ export function Navbar(props: IProps) {
   const { setOpenSideBar } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const renderModal = () => {
-    if (modalOpen) {
-      return <ModalAddTodos setModalClose={() => setModalOpen(!modalOpen)} />;
-    }
-    return null;
-  };
   const renderMain = useMemo(() => {
     return (
       <>
@@ -26,7 +22,9 @@ export function Navbar(props: IProps) {
                 className="text-xl cursor-pointer hover:text-[#e63946]"
                 onClick={setOpenSideBar}
               />
-              <GoHome className="text-xl cursor-pointer hover:text-[#e63946]" />
+              <Link href="/">
+                <GoHome className="text-xl cursor-pointer hover:text-[#e63946]" />
+              </Link>
             </div>
             <div className="flex items-center gap-3 md:gap-4">
               <GoPlus
@@ -35,20 +33,27 @@ export function Navbar(props: IProps) {
                   setModalOpen(!modalOpen);
                 }}
               />
-              <div className="flex items-center gap-1">
-                <GoTasklist className="text-xl cursor-pointer hover:text-[#e63946]" />
-                <h1 className="text-xs select-none">2/5</h1>
-              </div>
+
+              <Link href="/activity">
+                <div className="flex items-center gap-1">
+                  <GoTasklist className="text-xl cursor-pointer hover:text-[#e63946]" />
+                  <h1 className="text-xs select-none">2/5</h1>
+                </div>
+              </Link>
               <div className="p-1 bg-[#e63946] rounded-full">
                 <GoPerson className="text-white cursor-pointer" />
               </div>
             </div>
           </div>
         </nav>
-        {renderModal()}
+        <AnimatePresence>
+          {modalOpen && (
+            <ModalAddTodos setModalClose={() => setModalOpen(!modalOpen)} />
+          )}
+        </AnimatePresence>
       </>
     );
-  }, [setOpenSideBar, renderModal]);
+  }, [setOpenSideBar, modalOpen]);
 
   return renderMain;
 }

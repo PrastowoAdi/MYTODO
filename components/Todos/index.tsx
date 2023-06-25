@@ -12,38 +12,6 @@ export function Todos() {
 
   const [addTaskForm, setAddTaskForm] = useState<boolean>(false);
 
-  const renderAddTaskContent = () => {
-    if (addTaskForm) {
-      return (
-        <AnimatePresence>
-          <motion.div
-            key="formadd"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { delay: 0.7, duration: 0.3 } }}
-            className="border border-[#B8B8B8] rounded-md mt-3"
-          >
-            <FormAddTask
-              setAddTaskForm={() => setAddTaskForm(false)}
-              setModalClose={() => {}}
-            />
-          </motion.div>
-        </AnimatePresence>
-      );
-    }
-    return (
-      <div
-        className="flex flex-row items-center gap-2 mt-3 cursor-pointer group"
-        onClick={() => setAddTaskForm(true)}
-      >
-        <GoPlus className="text-lg text-[#e63946] group-hover:bg-[#e63946] group-hover:text-white group-hover:rounded-full" />
-        <h1 className="text-sm text-[#B8B8B8] font-light group-hover:text-[#e63946]">
-          Add Task
-        </h1>
-      </div>
-    );
-  };
-
   const renderMain = useMemo(() => {
     return (
       <section className="flex-1 h-screen">
@@ -72,12 +40,40 @@ export function Todos() {
               </div>
               <hr />
             </div>
-            {renderAddTaskContent()}
+            {!addTaskForm && (
+              <div
+                className="flex flex-row items-center gap-2 mt-3 cursor-pointer group"
+                onClick={() => setAddTaskForm(true)}
+              >
+                <GoPlus className="text-lg text-[#e63946] group-hover:bg-[#e63946] group-hover:text-white group-hover:rounded-full" />
+                <h1 className="text-sm text-[#B8B8B8] font-light group-hover:text-[#e63946]">
+                  Add Task
+                </h1>
+              </div>
+            )}
+            <AnimatePresence>
+              {addTaskForm && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{
+                    opacity: 0,
+                    transition: { duration: 0.3 },
+                  }}
+                  className="border border-[#B8B8B8] rounded-md mt-3"
+                >
+                  <FormAddTask
+                    setAddTaskForm={() => setAddTaskForm(false)}
+                    setModalClose={() => {}}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </section>
     );
-  }, [renderAddTaskContent]);
+  }, [addTaskForm]);
 
   return renderMain;
 }

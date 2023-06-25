@@ -9,38 +9,39 @@ export function ModalAddTodos(props: IProps) {
   const { setModalClose } = props;
   const renderMain = useMemo(() => {
     return (
-      <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{
+          opacity: 0,
+          transition: {
+            delay: 0.6,
+            duration: 0.3,
+          },
+        }}
+        className="absolute z-50 flex w-full h-screen bg-black/40"
+      >
         <motion.div
-          key="modal"
+          key="modal-contentform"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{
+          animate={{
             opacity: 1,
+            transition: {
+              delay: 0.3,
+              duration: 0.3,
+            },
           }}
-          className="absolute z-50 flex w-full h-screen bg-black/40"
+          exit={{ opacity: 0, transition: { duration: 0.3 } }}
+          className="flex items-center justify-center w-[90%] p-5 mx-auto md:w-1/2 h-1/2"
         >
-          <motion.div
-            key="modal-contentform"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                delay: 0.3,
-                duration: 0.3,
-              },
-            }}
-            exit={{ opacity: 0, transition: { delay: 0.7, duration: 0.3 } }}
-            className="flex items-center justify-center w-[90%] p-5 mx-auto md:w-1/2 h-1/2"
-          >
-            <div className="w-full px-2 py-3 mx-auto bg-white rounded-md md:w-2/3">
-              <FormAddTask
-                setAddTaskForm={() => {}}
-                setModalClose={setModalClose}
-              />
-            </div>
-          </motion.div>
+          <div className="w-full px-2 py-3 mx-auto bg-white rounded-md md:w-2/3">
+            <FormAddTask
+              setAddTaskForm={() => {}}
+              setModalClose={setModalClose}
+            />
+          </div>
         </motion.div>
-      </AnimatePresence>
+      </motion.div>
     );
   }, [setModalClose]);
 
