@@ -45,12 +45,14 @@ const App = ({ Component, pageProps }: AppProps) => {
         <div className="relative md:flex">
           <AnimatePresence>
             {sidebarOpen && (
-              <div className="absolute w-[50%] md:relative md:w-1/3 lg:w-1/5 h-screen bg-[#FAFAFA] shadow-md select-none">
+              <div className="absolute w-[50%] md:relative md:w-1/3 lg:w-1/5 h-screen bg-[#FAFAFA] shadow-md select-none z-50">
                 <Sidebar />
               </div>
             )}
           </AnimatePresence>
-          <Component {...pageProps} />
+          <div className="w-full h-screen overflow-y-scroll">
+            <Component {...pageProps} />
+          </div>
         </div>
       </QueryClientProvider>
     </>

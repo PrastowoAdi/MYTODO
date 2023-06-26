@@ -14,8 +14,8 @@ export function Todos() {
 
   const renderMain = useMemo(() => {
     return (
-      <section className="flex-1 h-screen">
-        <div className="w-5/6 h-screen mx-auto md:w-4/6">
+      <section className="flex-1 pb-20">
+        <div className="w-5/6 mx-auto md:w-4/6">
           <div className="py-2">
             <h1 className="mt-10 text-2xl font-semibold text-[#1d3557]">
               {dateNow === today && "Today"}{" "}
@@ -23,23 +23,28 @@ export function Todos() {
                 {moment().format("ddd DD MMM")}
               </span>
             </h1>
-            <div className="flex flex-col gap-2 mt-3">
-              <div className="flex flex-row items-center gap-2 mb-5">
-                <GoCheck className="text-lg text-white bg-white border border-[#B8B8B8] rounded-full cursor-pointer hover:bg-[#B8B8B8] hover:text-gray-600 p-[0.125rem]" />
-                <div className="flex-1 text-[#888888]">
-                  <h1 className="text-base text-[#1d3557]">Title Todos</h1>
-                  <p className="text-[0.875rem] font-light">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Aliquam cum officia animi nemo beatae similique assumenda
-                    vitae accusantium, delectus laborum dolore eos ipsum atque
-                    incidunt! Nisi autem sapiente libero quasi sit unde magni
-                    eveniet, hic enim quo atque esse commodi facere provident
-                    pariatur alias soluta ullam nostrum illum? Ea, vel!
-                  </p>
+            {Array(10)
+              .fill(undefined)
+              .map((e: any, idx: any) => (
+                <div className="flex flex-col gap-2 mt-3" key={idx}>
+                  <div className="flex flex-row items-center gap-2 mb-5">
+                    <GoCheck className="text-lg text-white bg-white border border-[#B8B8B8] rounded-full cursor-pointer hover:bg-[#B8B8B8] hover:text-gray-600 p-[0.125rem]" />
+                    <div className="flex-1 text-[#888888]">
+                      <h1 className="text-base text-[#1d3557]">Title Todos</h1>
+                      <p className="text-[0.875rem] font-light">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Aliquam cum officia animi nemo beatae similique
+                        assumenda vitae accusantium, delectus laborum dolore eos
+                        ipsum atque incidunt! Nisi autem sapiente libero quasi
+                        sit unde magni eveniet, hic enim quo atque esse commodi
+                        facere provident pariatur alias soluta ullam nostrum
+                        illum? Ea, vel!
+                      </p>
+                    </div>
+                  </div>
+                  <hr />
                 </div>
-              </div>
-              <hr />
-            </div>
+              ))}
             {!addTaskForm && (
               <div
                 className="flex flex-row items-center gap-2 mt-3 cursor-pointer group"
