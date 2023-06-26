@@ -4,11 +4,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import moment from "moment";
 
 import FormAddTask from "./FormAddTask";
+import { usetGetTodosList } from "@/hooks";
 
 export function Todos() {
   const date: Date = new Date();
   const dateNow = date.getDate();
   const today = moment().date();
+
+  const useGetTodosList = usetGetTodosList();
+  const { data, isLoading } = useGetTodosList;
 
   const [addTaskForm, setAddTaskForm] = useState<boolean>(false);
 
@@ -23,28 +27,25 @@ export function Todos() {
                 {moment().format("ddd DD MMM")}
               </span>
             </h1>
-            {Array(10)
-              .fill(undefined)
-              .map((e: any, idx: any) => (
-                <div className="flex flex-col gap-2 mt-3" key={idx}>
-                  <div className="flex flex-row items-center gap-2 mb-5">
-                    <GoCheck className="text-lg text-white bg-white border border-[#B8B8B8] rounded-full cursor-pointer hover:bg-[#B8B8B8] hover:text-gray-600 p-[0.125rem]" />
-                    <div className="flex-1 text-[#888888]">
-                      <h1 className="text-base text-[#1d3557]">Title Todos</h1>
-                      <p className="text-[0.875rem] font-light">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Aliquam cum officia animi nemo beatae similique
-                        assumenda vitae accusantium, delectus laborum dolore eos
-                        ipsum atque incidunt! Nisi autem sapiente libero quasi
-                        sit unde magni eveniet, hic enim quo atque esse commodi
-                        facere provident pariatur alias soluta ullam nostrum
-                        illum? Ea, vel!
-                      </p>
+            {isLoading ? (
+              ""
+            ) : (
+              <>
+                {data.data.map((e: any, idx: any) => (
+                  <div className="flex flex-col gap-2 mt-3" key={idx}>
+                    <div className="flex flex-row items-center gap-2 mb-5">
+                      <GoCheck className="text-lg text-white bg-white border border-[#B8B8B8] rounded-full cursor-pointer hover:bg-[#B8B8B8] hover:text-gray-600 p-[0.125rem]" />
+                      <div className="flex-1 text-[#888888]">
+                        <h1 className="text-base text-[#1d3557]">{e.title}</h1>
+                        <p className="text-[0.875rem] font-light">{e.desc}</p>
+                      </div>
                     </div>
+                    <hr />
                   </div>
-                  <hr />
-                </div>
-              ))}
+                ))}
+              </>
+            )}
+
             {!addTaskForm && (
               <div
                 className="flex flex-row items-center gap-2 mt-3 cursor-pointer group"
@@ -78,7 +79,7 @@ export function Todos() {
         </div>
       </section>
     );
-  }, [addTaskForm]);
+  }, [addTaskForm, isLoading, data]);
 
   return renderMain;
 }

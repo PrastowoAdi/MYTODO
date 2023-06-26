@@ -5,7 +5,7 @@ export default class Document extends NextDocument {
     return (
       <Html lang="en">
         <Head></Head>
-        <body className="overflow-y-hidden">
+        <body className="md:overflow-y-hidden">
           <Main />
           <NextScript />
         </body>
