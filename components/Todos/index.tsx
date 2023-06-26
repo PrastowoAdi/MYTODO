@@ -14,7 +14,7 @@ export function Todos() {
 
   const renderMain = useMemo(() => {
     return (
-      <section className="flex-1 pb-20">
+      <section className="flex-1 h-screen overflow-y-scroll pb-36">
         <div className="w-5/6 mx-auto md:w-4/6">
           <div className="py-2">
             <h1 className="mt-10 text-2xl font-semibold text-[#1d3557]">

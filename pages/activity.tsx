@@ -4,7 +4,7 @@ import { GoCheckCircleFill, GoPerson } from "react-icons/go";
 
 const Activity: NextPage = () => {
   return (
-    <section className="flex-1 pb-10">
+    <section className="flex-1 h-screen pb-10 overflow-y-scroll">
       <div className="w-5/6 py-10 mx-auto md:w-4/6">
         <h1 className="text-xl font-semibold">All Activity</h1>
         <div className="flex flex-row items-center gap-1 mt-2 mb-5 ml-2 text-sm">

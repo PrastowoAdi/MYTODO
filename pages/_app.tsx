@@ -50,9 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               </div>
             )}
           </AnimatePresence>
-          <div className="w-full h-screen overflow-y-scroll">
-            <Component {...pageProps} />
-          </div>
+          <Component {...pageProps} />
         </div>
       </QueryClientProvider>
     </>
